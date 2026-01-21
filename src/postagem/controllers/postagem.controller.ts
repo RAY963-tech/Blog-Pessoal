@@ -9,11 +9,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { Postagem } from '../entities/postagem.entity';
 import { PostagemService } from '../services/postagem.service';
 import { DeleteResult } from 'typeorm';
 
+@UseGuards(JwAuthGuard)
 @Controller('/postagens')
 export class PostagemController {
   constructor(private readonly postagemService: PostagemService) {}
@@ -39,7 +42,7 @@ export class PostagemController {
   @Put()
   @HttpCode(HttpStatus.OK)
   update(@Body() postagem: Postagem): Promise<Postagem> {
-    return this.postagemService.updateDateColumn(postagem);
+    return this.postagemService.update(postagem);
   }
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
