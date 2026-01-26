@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { App } from 'supertest/types';
 
 describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
@@ -19,7 +18,7 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',
-          entities: [__dirname + './../src/**/entities/*.entity.ts'],
+          entities: [__dirname + './../src/**/entities/*.entity.ts,.js'],
           synchronize: true,
           dropSchema: true,
         }),
@@ -46,6 +45,7 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
         foto: '-',
       })
       .expect(201);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     usuarioId = resposta.body.id;
   });
 
@@ -87,6 +87,7 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
       .put('/usuarios/atualizar')
       .set('Authorization', `${token}`)
       .send({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         id: usuarioId,
         nome: 'Root Atualizado',
         usuario: 'root@root.com',
@@ -95,6 +96,7 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
       })
       .expect(200)
       .then((resposta) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         expect('Root Atualizado').toEqual(resposta.body.nome);
       });
   });

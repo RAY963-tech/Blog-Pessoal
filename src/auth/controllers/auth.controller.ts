@@ -12,13 +12,13 @@ import { UsuarioLogin } from '../entities/usuariologin.entity';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Usuario')
-@Controller('/usuarios')
+@Controller('usuarios')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
-  @Post('/logar')
+  @Post('logar')
   login(@Body() usuario: UsuarioLogin): Promise<any> {
     return this.authService.login(usuario);
   }
