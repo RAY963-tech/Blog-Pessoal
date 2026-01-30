@@ -7,30 +7,30 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Usuario {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+  id!: number;
 
   @IsNotEmpty()
   @Column({ length: 255, nullable: false })
   @ApiProperty()
-  nome: string;
+  nome!: string;
 
   @IsEmail()
   @IsNotEmpty()
   @Column({ length: 255, nullable: false })
   @ApiProperty({ example: 'rayanen@genstudents.org' })
-  usuario: string;
+  usuario!: string;
 
   @MinLength(8)
   @IsNotEmpty()
   @Column({ length: 255, nullable: false })
   @ApiProperty()
-  senha: string;
+  senha!: string;
 
   @Column({ length: 5000 })
   @ApiProperty()
-  foto: string;
+  foto!: string;
 
   @ApiProperty()
   @OneToMany(() => Postagem, (postagem) => postagem.usuario)
-  postagem: Postagem[];
+  postagem!: Postagem[];
 }

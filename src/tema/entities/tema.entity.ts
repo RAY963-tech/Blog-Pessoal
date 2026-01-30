@@ -7,14 +7,14 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Tema {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+  id!: number;
 
   @Column({ length: 255, nullable: false })
   @IsNotEmpty()
   @ApiProperty()
-  descricao: string;
+  descricao!: string;
 
   @ApiProperty()
   @OneToMany(() => Postagem, (postagem) => postagem.tema)
-  postagem: Postagem[];
+  postagem!: Postagem[];
 }

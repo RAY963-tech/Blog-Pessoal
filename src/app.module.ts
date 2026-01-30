@@ -5,21 +5,35 @@ import { PostagemModule } from './postagem/postagem.module';
 import { Tema } from './tema/entities/tema.entity';
 import { TemaModule } from './tema/tema.module';
 import { AuthModule } from './auth/auth.module';
-import { Usuario } from './auth/entities/usuario.entity';
+import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AppController } from './app.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '@3#2$1',
-      database: 'db_blogpessoal',
-      entities: [Postagem, Tema, Usuario],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => {
+        if (process.env.NODE_ENV === 'test') {
+          return {
+            type: 'sqlite',
+            database: ':memory:',
+            entities: [Postagem, Tema, Usuario],
+            synchronize: true,
+            dropSchema: true,
+          };
+        }
+
+        return {
+          type: 'mysql',
+          host: 'localhost',
+          port: 3306,
+          username: 'root',
+          password: '@3#2$1',
+          database: 'db_blogpessoal',
+          entities: [Postagem, Tema, Usuario],
+          synchronize: true,
+        };
+      },
     }),
     PostagemModule,
     TemaModule,
@@ -27,6 +41,6 @@ import { AppController } from './app.controller';
     UsuarioModule,
   ],
   controllers: [AppController],
-  providers: [AuthModule],
+  providers: [],
 })
 export class AppModule {}
